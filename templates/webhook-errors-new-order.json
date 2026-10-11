@@ -1,0 +1,54 @@
+{
+ "name": "New order webhook",
+ "nodes": [
+  {
+   "parameters": {
+    "httpMethod": "POST",
+    "path": "new-order",
+    "responseMode": "responseNode",
+    "options": {}
+   },
+   "id": "w1",
+   "name": "Webhook",
+   "type": "n8n-nodes-base.webhook",
+   "typeVersion": 2.1,
+   "position": [
+    0,
+    0
+   ],
+   "webhookId": "8a427b8e-17b8-409a-89a0-d09f854ed53c"
+  },
+  {
+   "parameters": {
+    "respondWith": "text",
+    "responseBody": "=Thanks, {{ $json.body.name }}! We got your order.",
+    "options": {}
+   },
+   "id": "w2",
+   "name": "Respond to Webhook",
+   "type": "n8n-nodes-base.respondToWebhook",
+   "typeVersion": 1.4,
+   "position": [
+    304,
+    0
+   ]
+  }
+ ],
+ "connections": {
+  "Webhook": {
+   "main": [
+    [
+     {
+      "node": "Respond to Webhook",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}

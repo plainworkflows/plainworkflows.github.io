@@ -26,5 +26,11 @@
   "precisa": [
    "an Anthropic API key, or any other chat model"
   ]
+ },
+ {
+  "slug": "webhook-errors-new-order",
+  "titulo": "n8n Webhook Not Working? Fix These 5 Errors (404 Not Registered, 500, Empty Data)",
+  "video": "",
+  "precisa": []
  }
 ]
