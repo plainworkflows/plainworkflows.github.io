@@ -32,5 +32,11 @@
   "titulo": "n8n Webhook Not Working? Fix These 5 Errors (404 Not Registered, 500, Empty Data)",
   "video": "https://youtu.be/juGjgarjODo",
   "precisa": []
+ },
+ {
+  "slug": "loop-over-items-welcome-emails",
+  "titulo": "n8n Loop Over Items Not Working? Fix These 5 Mistakes (Runs Once, Stops, Too Many Requests)",
+  "video": "",
+  "precisa": []
  }
 ]

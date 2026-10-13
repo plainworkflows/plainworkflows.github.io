@@ -1,0 +1,254 @@
+{
+ "name": "Welcome emails",
+ "nodes": [
+  {
+   "parameters": {},
+   "id": "when-clicking-'execute-workflow'",
+   "name": "When clicking 'Execute workflow'",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "url": "http://127.0.0.1:5695/customers",
+    "options": {}
+   },
+   "id": "get-customers",
+   "name": "Get customers",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    240,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "loop-over-items",
+   "name": "Loop Over Items",
+   "type": "n8n-nodes-base.splitInBatches",
+   "typeVersion": 3,
+   "position": [
+    704,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 2
+     },
+     "conditions": [
+      {
+       "id": "c1",
+       "leftValue": "={{ $json.status }}",
+       "rightValue": "active",
+       "operator": {
+        "type": "string",
+        "operation": "equals"
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "id": "subscribed",
+   "name": "Subscribed?",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.2,
+   "position": [
+    944,
+    160
+   ]
+  },
+  {
+   "parameters": {
+    "method": "POST",
+    "url": "http://127.0.0.1:5695/send",
+    "sendBody": true,
+    "bodyParameters": {
+     "parameters": [
+      {
+       "name": "name",
+       "value": "={{ $json.name }}"
+      },
+      {
+       "name": "email",
+       "value": "={{ $json.email }}"
+      }
+     ]
+    },
+    "options": {}
+   },
+   "id": "send-email",
+   "name": "Send email",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    1184,
+    144
+   ]
+  },
+  {
+   "parameters": {
+    "method": "POST",
+    "url": "http://127.0.0.1:5695/report",
+    "sendBody": true,
+    "bodyParameters": {
+     "parameters": [
+      {
+       "name": "processed",
+       "value": "={{ $input.all().length }}"
+      }
+     ]
+    },
+    "options": {}
+   },
+   "id": "send-report",
+   "name": "Send report",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    1424,
+    -128
+   ],
+   "executeOnce": true
+  },
+  {
+   "parameters": {
+    "fieldToSplitOut": "customers",
+    "options": {}
+   },
+   "type": "n8n-nodes-base.splitOut",
+   "typeVersion": 1,
+   "position": [
+    464,
+    0
+   ],
+   "id": "b335acdf-e1c4-4eee-843a-97f97882e38c",
+   "name": "Split Out"
+  },
+  {
+   "parameters": {
+    "amount": 1
+   },
+   "type": "n8n-nodes-base.wait",
+   "typeVersion": 1.1,
+   "position": [
+    1408,
+    144
+   ],
+   "id": "b0e27a36-3f13-464c-8765-15a604ca4b93",
+   "name": "Wait",
+   "webhookId": "77e273f1-c573-4f37-9102-a06069090ef9"
+  }
+ ],
+ "connections": {
+  "When clicking 'Execute workflow'": {
+   "main": [
+    [
+     {
+      "node": "Get customers",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Get customers": {
+   "main": [
+    [
+     {
+      "node": "Split Out",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Loop Over Items": {
+   "main": [
+    [
+     {
+      "node": "Send report",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Subscribed?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Subscribed?": {
+   "main": [
+    [
+     {
+      "node": "Send email",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Loop Over Items",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Send email": {
+   "main": [
+    [
+     {
+      "node": "Wait",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Split Out": {
+   "main": [
+    [
+     {
+      "node": "Loop Over Items",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Wait": {
+   "main": [
+    [
+     {
+      "node": "Loop Over Items",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}
