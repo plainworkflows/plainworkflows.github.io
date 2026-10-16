@@ -42,7 +42,7 @@
  {
   "slug": "telegram-release-watcher",
   "titulo": "n8n Telegram Bot, Start to Finish: BotFather, Auto Posts to a Channel, and 4 Errors Fixed",
-  "video": "",
+  "video": "https://youtu.be/fburB6oEDQ0",
   "precisa": [
    "Telegram API (bot token from BotFather)",
    "your own channel in the Chat ID"
