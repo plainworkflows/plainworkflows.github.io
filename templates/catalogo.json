@@ -38,5 +38,14 @@
   "titulo": "n8n Loop Over Items Not Working? Fix These 5 Mistakes (Runs Once, Stops, Too Many Requests)",
   "video": "https://youtu.be/_UoyJyMN1Yc",
   "precisa": []
+ },
+ {
+  "slug": "telegram-release-watcher",
+  "titulo": "n8n Telegram Bot, Start to Finish: BotFather, Auto Posts to a Channel, and 4 Errors Fixed",
+  "video": "",
+  "precisa": [
+   "Telegram API (bot token from BotFather)",
+   "your own channel in the Chat ID"
+  ]
  }
 ]

@@ -1,0 +1,234 @@
+{
+ "name": "Release watcher",
+ "nodes": [
+  {
+   "parameters": {
+    "rule": {
+     "interval": [
+      {
+       "field": "hours"
+      }
+     ]
+    }
+   },
+   "id": "every-hour",
+   "name": "Every hour",
+   "type": "n8n-nodes-base.scheduleTrigger",
+   "typeVersion": 1.2,
+   "position": [
+    0,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "url": "https://api.github.com/repos/n8n-io/n8n/releases?per_page=10",
+    "options": {
+     "timeout": 20000
+    }
+   },
+   "id": "get-releases",
+   "name": "Get releases",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    224,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 2
+     },
+     "conditions": [
+      {
+       "id": "a",
+       "leftValue": "={{ $json.prerelease }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "false",
+        "singleValue": true
+       }
+      },
+      {
+       "id": "b",
+       "leftValue": "={{ $json.tag_name }}",
+       "rightValue": "n8n@",
+       "operator": {
+        "type": "string",
+        "operation": "startsWith"
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "id": "stable-only",
+   "name": "Stable only",
+   "type": "n8n-nodes-base.filter",
+   "typeVersion": 2.2,
+   "position": [
+    448,
+    0
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "latest",
+   "name": "Latest",
+   "type": "n8n-nodes-base.limit",
+   "typeVersion": 1,
+   "position": [
+    672,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "version",
+       "name": "version",
+       "value": "={{ $json.tag_name.replace('n8n@', '') }}",
+       "type": "string"
+      },
+      {
+       "id": "url",
+       "name": "url",
+       "value": "={{ $json.html_url }}",
+       "type": "string"
+      },
+      {
+       "id": "published",
+       "name": "published",
+       "value": "={{ $json.published_at.toDateTime().toFormat('d LLL yyyy') }}",
+       "type": "string"
+      }
+     ]
+    },
+    "options": {}
+   },
+   "id": "release-info",
+   "name": "Release info",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    880,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "chatId": "@plainworkflowsdemo",
+    "text": "=*New n8n release: {{ $json.version }}*\n{{ $json.url }}",
+    "additionalFields": {
+     "appendAttribution": false
+    }
+   },
+   "type": "n8n-nodes-base.telegram",
+   "typeVersion": 1.2,
+   "position": [
+    1328,
+    0
+   ],
+   "id": "c89c6a61-5b38-4b8b-8113-4c6df9bb8755",
+   "name": "Send a text message",
+   "webhookId": "7f101c50-c7d8-4146-bd04-248d5529f606"
+  },
+  {
+   "parameters": {
+    "operation": "removeItemsSeenInPreviousExecutions",
+    "dedupeValue": "={{ $json.version }}",
+    "options": {}
+   },
+   "type": "n8n-nodes-base.removeDuplicates",
+   "typeVersion": 2,
+   "position": [
+    1104,
+    0
+   ],
+   "id": "cfc50c91-79be-46e7-9a22-c43f96a82e23",
+   "name": "Remove Duplicates"
+  }
+ ],
+ "connections": {
+  "Every hour": {
+   "main": [
+    [
+     {
+      "node": "Get releases",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Get releases": {
+   "main": [
+    [
+     {
+      "node": "Stable only",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Stable only": {
+   "main": [
+    [
+     {
+      "node": "Latest",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Latest": {
+   "main": [
+    [
+     {
+      "node": "Release info",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Release info": {
+   "main": [
+    [
+     {
+      "node": "Remove Duplicates",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Remove Duplicates": {
+   "main": [
+    [
+     {
+      "node": "Send a text message",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}
