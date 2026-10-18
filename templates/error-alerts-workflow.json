@@ -1,0 +1,69 @@
+{
+ "name": "Error alerts",
+ "nodes": [
+  {
+   "id": "910baa0f-514f-4b1f-b045-a8750bad988c",
+   "name": "Error Trigger",
+   "type": "n8n-nodes-base.errorTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "7d301d8d-76d2-4a9c-9861-22365a66293d",
+   "name": "Send alert",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    260,
+    0
+   ],
+   "parameters": {
+    "method": "POST",
+    "url": "http://127.0.0.1:5695/alert",
+    "sendBody": true,
+    "options": {},
+    "bodyParameters": {
+     "parameters": [
+      {
+       "name": "workflow",
+       "value": "={{ $json.workflow.name }}"
+      },
+      {
+       "name": "node",
+       "value": "={{ $json.execution.lastNodeExecuted }}"
+      },
+      {
+       "name": "error",
+       "value": "={{ $json.execution.error.message }}"
+      },
+      {
+       "name": "link",
+       "value": "={{ $json.execution.url }}"
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "connections": {
+  "Error Trigger": {
+   "main": [
+    [
+     {
+      "node": "Send alert",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}

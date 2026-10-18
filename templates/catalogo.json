@@ -47,5 +47,11 @@
    "Telegram API (bot token from BotFather)",
    "your own channel in the Chat ID"
   ]
+ },
+ {
+  "slug": "error-alerts-workflow",
+  "titulo": "n8n Error Trigger Not Working? Fix Error Handling: Retries, Alerts, Stop and Error (n8n 2)",
+  "video": "",
+  "precisa": []
  }
 ]
