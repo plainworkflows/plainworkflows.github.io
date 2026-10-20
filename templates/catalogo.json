@@ -53,5 +53,13 @@
   "titulo": "n8n Error Trigger Not Working? Fix Error Handling: Retries, Alerts, Stop and Error (n8n 2)",
   "video": "https://youtu.be/IWn9VlAUK_w",
   "precisa": []
+ },
+ {
+  "slug": "shop-assistant-agent",
+  "titulo": "n8n for Beginners: Build 3 Real Automations, From a Schedule to an AI Agent (n8n 2)",
+  "video": "",
+  "precisa": [
+   "Anthropic API key"
+  ]
  }
 ]

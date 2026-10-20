@@ -1,0 +1,129 @@
+{
+ "name": "Shop assistant",
+ "nodes": [
+  {
+   "parameters": {
+    "options": {}
+   },
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.5,
+   "position": [
+    0,
+    0
+   ],
+   "id": "024ec62d-c146-4b26-918d-38612103fa98",
+   "name": "When chat message received",
+   "webhookId": "04786b1f-8fe5-4a0a-85ea-587a0cd3af8b"
+  },
+  {
+   "parameters": {
+    "options": {
+     "systemMessage": "You are the shop assistant of Plain Shop. Use the get_products tool to check products, prices and stock. Never guess. If a product is not in the list, say we don't sell it. Answer in one or two short sentences."
+    }
+   },
+   "type": "@n8n/n8n-nodes-langchain.agent",
+   "typeVersion": 3.1,
+   "position": [
+    224,
+    0
+   ],
+   "id": "1233d897-efc0-4962-9498-5d5fd1b124c4",
+   "name": "AI Agent"
+  },
+  {
+   "parameters": {
+    "model": {
+     "__rl": true,
+     "value": "claude-haiku-5-5",
+     "mode": "list",
+     "cachedResultName": "Claude Haiku 5.5"
+    },
+    "options": {}
+   },
+   "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+   "typeVersion": 1.6,
+   "position": [
+    96,
+    208
+   ],
+   "id": "20c99a10-b941-4660-8cad-60711da22b24",
+   "name": "Anthropic Chat Model"
+  },
+  {
+   "parameters": {},
+   "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+   "typeVersion": 1.4,
+   "position": [
+    240,
+    208
+   ],
+   "id": "098f5b46-ee11-4f71-a308-de9cddc43d1d",
+   "name": "Simple Memory"
+  },
+  {
+   "parameters": {
+    "toolDescription": "Get every product in the shop, with its price and how many are in stock.",
+    "url": "http://127.0.0.1:5695/api/products",
+    "options": {}
+   },
+   "type": "n8n-nodes-base.httpRequestTool",
+   "typeVersion": 4.5,
+   "position": [
+    384,
+    208
+   ],
+   "id": "b80ec88a-5c79-4005-bc3d-1474d3aa785e",
+   "name": "get_products"
+  }
+ ],
+ "connections": {
+  "When chat message received": {
+   "main": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Anthropic Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Simple Memory": {
+   "ai_memory": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_memory",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "get_products": {
+   "ai_tool": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}
