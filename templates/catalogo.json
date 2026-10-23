@@ -65,7 +65,7 @@
  {
   "slug": "mcp-shop-tools-server",
   "titulo": "n8n MCP Tutorial: Build an MCP Server and Connect an AI Agent (3 Mistakes Fixed)",
-  "video": "",
+  "video": "https://youtu.be/cGj9wwflmDw",
   "precisa": [
    "Bearer Auth credential with your own long random token (same one in your MCP Client)"
   ]
