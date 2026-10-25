@@ -73,7 +73,7 @@
  {
   "slug": "ai-agent-support-fixed",
   "titulo": "n8n AI Agent Not Working? Fix the 5 Most Common Errors (n8n v2)",
-  "video": "",
+  "video": "https://youtu.be/IgWbsujvPxk",
   "precisa": [
    "Anthropic credential for the chat model (or connect any chat model you already use)"
   ]
