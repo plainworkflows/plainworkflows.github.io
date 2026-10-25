@@ -1,0 +1,153 @@
+{
+ "name": "Support agent",
+ "nodes": [
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "df3e1c45-63e6-4d9f-b033-dc7afba61401",
+   "name": "When chat message received",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.5,
+   "position": [
+    0,
+    0
+   ],
+   "webhookId": "11b81524-9c3a-4431-b55d-73f579be34b3"
+  },
+  {
+   "parameters": {
+    "options": {
+     "systemMessage": "You are the support assistant of Plain Shop. Answer in one or two short sentences. If a tool fails, tell the customer what happened and stop."
+    }
+   },
+   "id": "f9445610-7e73-464f-9cfd-235d56022bf4",
+   "name": "AI Agent",
+   "type": "@n8n/n8n-nodes-langchain.agent",
+   "typeVersion": 3.1,
+   "position": [
+    240,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "model": {
+     "__rl": true,
+     "value": "claude-haiku-5-5",
+     "mode": "list",
+     "cachedResultName": "Claude Haiku 5.5"
+    },
+    "options": {}
+   },
+   "id": "14b0562a-732c-4124-94a4-2e8a01b13cc7",
+   "name": "Anthropic Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+   "typeVersion": 1.6,
+   "position": [
+    128,
+    224
+   ]
+  },
+  {
+   "parameters": {
+    "description": "Get the status of an order. The input is the order number only, like 1041.",
+    "jsCode": "return \"The order system is down for maintenance. Do not call this tool again. Tell the customer to check back in one hour.\";"
+   },
+   "id": "5df100a5-2dce-4bbc-b333-d79a9abc311b",
+   "name": "get_order",
+   "type": "@n8n/n8n-nodes-langchain.toolCode",
+   "typeVersion": 1.3,
+   "position": [
+    560,
+    224
+   ]
+  },
+  {
+   "parameters": {
+    "description": "Get the store return and refund policy. Use it for any question about returns or refunds.",
+    "jsCode": "const policy = \"Returns: 14 days from delivery, unused items only. Refunds go back to the original card in 5 business days.\";\nreturn policy;"
+   },
+   "id": "2010a685-8227-4cd5-83fd-205f3da2e7ec",
+   "name": "get_return_policy",
+   "type": "@n8n/n8n-nodes-langchain.toolCode",
+   "typeVersion": 1.3,
+   "position": [
+    400,
+    224
+   ]
+  },
+  {
+   "parameters": {},
+   "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+   "typeVersion": 1.4,
+   "position": [
+    256,
+    208
+   ],
+   "id": "4d65e0c7-6e8f-44c5-91ee-5f1ddeac5ae6",
+   "name": "Simple Memory"
+  }
+ ],
+ "connections": {
+  "When chat message received": {
+   "main": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Anthropic Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "get_order": {
+   "ai_tool": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "get_return_policy": {
+   "ai_tool": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Simple Memory": {
+   "ai_memory": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_memory",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}

@@ -69,5 +69,13 @@
   "precisa": [
    "Bearer Auth credential with your own long random token (same one in your MCP Client)"
   ]
+ },
+ {
+  "slug": "ai-agent-support-fixed",
+  "titulo": "n8n AI Agent Not Working? Fix the 5 Most Common Errors (n8n v2)",
+  "video": "",
+  "precisa": [
+   "Anthropic credential for the chat model (or connect any chat model you already use)"
+  ]
  }
 ]
