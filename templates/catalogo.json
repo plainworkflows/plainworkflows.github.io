@@ -77,5 +77,14 @@
   "precisa": [
    "Anthropic credential for the chat model (or connect any chat model you already use)"
   ]
+ },
+ {
+  "slug": "rag-help-center-chatbot-ollama",
+  "titulo": "n8n RAG Chatbot: Chat With Your Own Documents, Free Local Embeddings (Ollama, 3 Mistakes Fixed)",
+  "video": "",
+  "precisa": [
+   "Ollama running locally with nomic-embed-text (ollama pull nomic-embed-text), and an Ollama credential pointing to it",
+   "Anthropic credential for the chat model (or connect any chat model you already use)"
+  ]
  }
 ]

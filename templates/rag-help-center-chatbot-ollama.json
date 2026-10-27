@@ -1,0 +1,253 @@
+{
+ "name": "Help center chatbot (finished)",
+ "nodes": [
+  {
+   "id": "de476ecb-f0da-457d-983d-3e05d277c8d7",
+   "name": "When clicking 'Execute workflow'",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    820,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "9a0fe3f4-9af4-4800-ace9-ba22388167c4",
+   "name": "Help center",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    1040,
+    0
+   ],
+   "parameters": {
+    "mode": "raw",
+    "jsonOutput": "{\n \"text\": \"Plain Shop help center\\n\\nReturns\\nYou can return any item within 30 days of delivery. The item must be unused and in its original box. Mugs that arrived broken or chipped are the exception: send a photo to help@plainshop.example within 7 days of delivery and we send a new one, no need to return the broken mug. Sale items marked \\\"final sale\\\" cannot be returned. To start a return, open your order page and click \\\"Return an item\\\". We email you a prepaid return label for orders inside the European Union. Customers in the United Kingdom pay the return postage themselves.\\n\\nRefunds\\nAfter your return arrives at our warehouse in Porto, we check it within 2 business days. The refund goes back to the original payment method within 5 business days after the check. Shipping costs are refunded only when the item was faulty or we sent the wrong item. Store credit is instant and gets an extra 10 percent on top.\\n\\nShipping\\nWe ship from Porto, Portugal. Standard shipping to Portugal and Spain takes 2 to 3 business days and costs 4 euros. The rest of the European Union takes 4 to 6 business days and costs 7 euros. The United Kingdom takes 5 to 8 business days and costs 9 euros, and customs fees are paid by the customer. Orders over 60 euros ship free inside the European Union. We do not ship outside Europe for now. Orders placed before 1 pm Lisbon time leave the warehouse the same day, Monday to Friday.\\n\\nTracking\\nEvery order gets a tracking link by email when it leaves the warehouse. The link can take up to 24 hours to show the first update. If the tracking has not moved for 5 business days, write to us and we open a claim with the carrier. Lost parcels are replaced or refunded, your choice, after the carrier confirms the loss.\\n\\nWarranty\\nNotebooks and tote bags have a 1 year warranty against defects. The blue mug and all ceramics have a 2 year warranty, but the warranty does not cover dishwasher damage on the hand painted collection, which is hand wash only. To claim the warranty, reply to your order email with a photo and your order number.\\n\\nProduct care\\nThe plain ceramics, including the blue mug, are safe in the dishwasher and the microwave. The hand painted collection has a gold rim, so it must never go in the microwave. Tote bags can be machine washed at 30 degrees, inside out, and should air dry. Notebooks use recycled paper that works with fountain pens.\\n\\nPayment\\nWe accept Visa, Mastercard, PayPal and MB Way. Payment is taken when the order is placed. Prices include VAT for customers in the European Union. Customers in the United Kingdom see prices without VAT and pay it to the carrier on delivery.\\n\\nGift cards\\nGift cards are sent by email, never by post, and are valid for 2 years. They cannot be exchanged for cash. You can use more than one gift card on the same order.\\n\\nChanging an order\\nYou can change the address or cancel an order for up to 1 hour after you place it, from the order page. After that hour the order is already being packed, so you need to wait for it to arrive and then start a return.\\n\\nPackaging\\nEvery order ships in a recycled cardboard box with paper filling, no plastic. Mugs are wrapped one by one in corrugated paper. If you order more than one mug, they travel in a box with dividers. We reuse the boxes that come back with returns whenever they are in good shape.\\n\\nMissed deliveries\\nIf nobody is home, the carrier leaves a note and tries again the next business day. After two failed attempts the parcel waits at the nearest pickup point for 7 days. If nobody collects it, it comes back to Porto and we refund the order minus the shipping cost.\\n\\nPre-orders\\nSome new colours open as pre-orders before they arrive. A pre-order is charged when you place it and ships on the date shown on the product page. If you also order items that are in stock, the whole order waits and ships together, so place two orders if you want the in-stock items first.\\n\\nStock alerts\\nWhen a product is sold out, click \\\"Tell me when it's back\\\" on the product page and leave your email. We send one email when it is back in stock, and then delete your address from that list. Sold out colours usually come back within 4 to 6 weeks.\\n\\nYour account\\nYou do not need an account to buy. With an account you can see past orders and save addresses. To reset your password, click \\\"Forgot password\\\" on the sign in page and follow the link we email you, which works for 30 minutes. To delete your account, email help@plainshop.example from the address you signed up with.\\n\\nPersonal data\\nWe only keep the data we need to deliver your order and answer your emails. We never sell your data. Card details are handled by our payment provider and never reach our servers. You can ask for a copy of your data or for it to be deleted at any time.\\n\\nBusiness orders\\nCompanies can order 50 or more units of the same product with a 15 percent discount. Custom logos are possible on mugs and tote bags only, with a minimum of 100 units and 3 weeks of production. Ask for a quote at business@plainshop.example.\\n\\nContact\\nThe fastest way to reach us is email at help@plainshop.example. We answer within 1 business day, Monday to Friday, 9 am to 6 pm Lisbon time. We do not have a phone line or a physical store.\"\n}",
+    "options": {}
+   }
+  },
+  {
+   "id": "b56c8d52-81ef-46d6-9ccd-c7f6640019f3",
+   "name": "Simple Vector Store",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+   "typeVersion": 1.3,
+   "position": [
+    1280,
+    0
+   ],
+   "parameters": {
+    "mode": "insert",
+    "memoryKey": {
+     "__rl": true,
+     "mode": "list",
+     "value": "shop_docs_demo",
+     "cachedResultName": "shop_docs_demo"
+    },
+    "clearStore": true
+   }
+  },
+  {
+   "id": "db77fc92-1f17-44fd-9093-3a2f4a23fd57",
+   "name": "Embeddings Ollama",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+   "typeVersion": 1,
+   "position": [
+    1220,
+    220
+   ],
+   "parameters": {
+    "model": "nomic-embed-text:latest"
+   }
+  },
+  {
+   "id": "8d45506c-dd9e-4abd-b185-feb11bf989fe",
+   "name": "Default Data Loader",
+   "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+   "typeVersion": 1.1,
+   "position": [
+    1400,
+    220
+   ],
+   "parameters": {
+    "options": {}
+   }
+  },
+  {
+   "id": "45b76c90-ea5e-4d56-9f13-bf7977db93b0",
+   "name": "When chat message received",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.5,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {
+    "options": {}
+   },
+   "webhookId": "61fbb250-bfa4-4e4a-937d-a358af2dd847"
+  },
+  {
+   "id": "fad729de-32f2-4b1e-892a-73e14655c9b5",
+   "name": "AI Agent",
+   "type": "@n8n/n8n-nodes-langchain.agent",
+   "typeVersion": 3.1,
+   "position": [
+    240,
+    0
+   ],
+   "parameters": {
+    "options": {
+     "systemMessage": "You are the support assistant of Plain Shop. Answer only with information from the help center tool. If the answer is not there, say you don't know and suggest emailing help@plainshop.example. Keep it to two short sentences."
+    }
+   }
+  },
+  {
+   "id": "06935ba9-5189-4fc6-9b6f-eb728474e0c7",
+   "name": "Anthropic Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+   "typeVersion": 1.6,
+   "position": [
+    160,
+    220
+   ],
+   "parameters": {
+    "model": {
+     "__rl": true,
+     "value": "claude-haiku-5-5",
+     "mode": "list",
+     "cachedResultName": "Claude Haiku 5.5"
+    },
+    "options": {}
+   }
+  },
+  {
+   "id": "a4d6b1bc-d874-49cc-a64d-0600c242340a",
+   "name": "Help center search",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+   "typeVersion": 1.3,
+   "position": [
+    400,
+    220
+   ],
+   "parameters": {
+    "mode": "retrieve-as-tool",
+    "toolDescription": "Search the Plain Shop help center: returns, refunds, shipping, warranty, product care and payment.",
+    "memoryKey": {
+     "__rl": true,
+     "mode": "list",
+     "value": "shop_docs_demo",
+     "cachedResultName": "shop_docs_demo"
+    },
+    "topK": 4
+   }
+  },
+  {
+   "id": "5beba6d6-0253-4063-bf98-3b97e1cb7de3",
+   "name": "Embeddings Ollama1",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+   "typeVersion": 1,
+   "position": [
+    400,
+    440
+   ],
+   "parameters": {
+    "model": "nomic-embed-text:latest"
+   }
+  }
+ ],
+ "connections": {
+  "When clicking 'Execute workflow'": {
+   "main": [
+    [
+     {
+      "node": "Help center",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Help center": {
+   "main": [
+    [
+     {
+      "node": "Simple Vector Store",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embeddings Ollama": {
+   "ai_embedding": [
+    [
+     {
+      "node": "Simple Vector Store",
+      "type": "ai_embedding",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Default Data Loader": {
+   "ai_document": [
+    [
+     {
+      "node": "Simple Vector Store",
+      "type": "ai_document",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "When chat message received": {
+   "main": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Anthropic Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Help center search": {
+   "ai_tool": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embeddings Ollama1": {
+   "ai_embedding": [
+    [
+     {
+      "node": "Help center search",
+      "type": "ai_embedding",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}
