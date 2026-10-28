@@ -2,7 +2,7 @@
  "name": "Help center chatbot (finished)",
  "nodes": [
   {
-   "id": "de476ecb-f0da-457d-983d-3e05d277c8d7",
+   "id": "736cd0a8-e8cd-4ef4-a28b-6e514cf9daf6",
    "name": "When clicking 'Execute workflow'",
    "type": "n8n-nodes-base.manualTrigger",
    "typeVersion": 1,
@@ -13,7 +13,7 @@
    "parameters": {}
   },
   {
-   "id": "9a0fe3f4-9af4-4800-ace9-ba22388167c4",
+   "id": "27aca586-1f03-4150-9084-5c67bb19fa6e",
    "name": "Help center",
    "type": "n8n-nodes-base.set",
    "typeVersion": 3.4,
@@ -28,7 +28,7 @@
    }
   },
   {
-   "id": "b56c8d52-81ef-46d6-9ccd-c7f6640019f3",
+   "id": "973378bf-620a-40e6-8023-d61cf5500c5b",
    "name": "Simple Vector Store",
    "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
    "typeVersion": 1.3,
@@ -48,7 +48,7 @@
    }
   },
   {
-   "id": "db77fc92-1f17-44fd-9093-3a2f4a23fd57",
+   "id": "37333237-216a-4d65-ae9e-f4c047f2d804",
    "name": "Embeddings Ollama",
    "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
    "typeVersion": 1,
@@ -61,7 +61,7 @@
    }
   },
   {
-   "id": "8d45506c-dd9e-4abd-b185-feb11bf989fe",
+   "id": "eee00585-06ac-4aca-b307-a5282643e0b4",
    "name": "Default Data Loader",
    "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
    "typeVersion": 1.1,
@@ -74,7 +74,7 @@
    }
   },
   {
-   "id": "45b76c90-ea5e-4d56-9f13-bf7977db93b0",
+   "id": "708a8a81-cfa2-4e28-ac2c-a52368b77195",
    "name": "When chat message received",
    "type": "@n8n/n8n-nodes-langchain.chatTrigger",
    "typeVersion": 1.5,
@@ -85,10 +85,10 @@
    "parameters": {
     "options": {}
    },
-   "webhookId": "61fbb250-bfa4-4e4a-937d-a358af2dd847"
+   "webhookId": "3c3876a5-7674-45a9-8cba-2301bb0c9e64"
   },
   {
-   "id": "fad729de-32f2-4b1e-892a-73e14655c9b5",
+   "id": "6f0d8131-832b-43d2-ba04-78907069955b",
    "name": "AI Agent",
    "type": "@n8n/n8n-nodes-langchain.agent",
    "typeVersion": 3.1,
@@ -103,7 +103,7 @@
    }
   },
   {
-   "id": "06935ba9-5189-4fc6-9b6f-eb728474e0c7",
+   "id": "7ddf6d8b-4cb9-42b0-b77a-e3f951c61ce1",
    "name": "Anthropic Chat Model",
    "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
    "typeVersion": 1.6,
@@ -122,7 +122,7 @@
    }
   },
   {
-   "id": "a4d6b1bc-d874-49cc-a64d-0600c242340a",
+   "id": "5fc6b547-6348-4593-b011-5570fc3f4b82",
    "name": "Help center search",
    "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
    "typeVersion": 1.3,
@@ -143,7 +143,7 @@
    }
   },
   {
-   "id": "5beba6d6-0253-4063-bf98-3b97e1cb7de3",
+   "id": "ce69d831-d575-42f9-9cf1-f8aedb90e42c",
    "name": "Embeddings Ollama1",
    "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
    "typeVersion": 1,
