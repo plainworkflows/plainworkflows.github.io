@@ -86,5 +86,15 @@
    "Ollama running locally with nomic-embed-text (ollama pull nomic-embed-text), and an Ollama credential pointing to it",
    "Anthropic credential for the chat model (or connect any chat model you already use)"
   ]
+ },
+ {
+  "slug": "website-faq-chatbot",
+  "titulo": "n8n Chat Trigger: Put an AI Chatbot on Your Website (Embedded Chat, 3 Mistakes Fixed)",
+  "video": "",
+  "precisa": [
+   "Anthropic credential for the chat model (or connect any chat model you already use)",
+   "Replace the FAQ in the AI Agent system message with your own, and set Allowed Origins on the Chat Trigger to your site (commas, no spaces)",
+   "Publish the workflow and paste the @n8n/chat snippet with your Chat URL into your page"
+  ]
  }
 ]
