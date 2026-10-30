@@ -90,7 +90,7 @@
  {
   "slug": "website-faq-chatbot",
   "titulo": "n8n Chat Trigger: Put an AI Chatbot on Your Website (Embedded Chat, 3 Mistakes Fixed)",
-  "video": "",
+  "video": "https://youtu.be/1yGbRGm8aAk",
   "precisa": [
    "Anthropic credential for the chat model (or connect any chat model you already use)",
    "Replace the FAQ in the AI Agent system message with your own, and set Allowed Origins on the Chat Trigger to your site (commas, no spaces)",
