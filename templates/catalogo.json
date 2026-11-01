@@ -100,7 +100,7 @@
  {
   "slug": "http-request-errors-sync-orders",
   "titulo": "n8n HTTP Request Errors: Fix 401, 403, 404, 429 Too Many Requests and Pagination (n8n 2)",
-  "video": "",
+  "video": "https://youtu.be/eCjmK3u0b78",
   "precisa": [
    "Bearer Auth credential with your API key (paste only the key, not the word Bearer)",
    "Replace the two URLs (a local test API in the video) with your API's endpoints and the field name of the ID",
