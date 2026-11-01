@@ -1,0 +1,100 @@
+{
+ "name": "Sync orders (finished)",
+ "nodes": [
+  {
+   "id": "f86002e8-0979-4e7c-8a72-131aa8e728cf",
+   "name": "When clicking ‘Execute workflow’",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "91009019-d0b5-4df2-af65-d95612227581",
+   "name": "Get orders",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    260,
+    0
+   ],
+   "parameters": {
+    "url": "http://localhost:5695/v1/orders",
+    "authentication": "genericCredentialType",
+    "genericAuthType": "httpBearerAuth",
+    "options": {
+     "pagination": {
+      "pagination": {
+       "parameters": {
+        "parameters": [
+         {
+          "type": "qs",
+          "name": "page",
+          "value": "={{ $pageCount + 1 }}"
+         }
+        ]
+       },
+       "paginationCompleteWhen": "responseIsEmpty",
+       "limitPagesFetched": true,
+       "maxRequests": 10
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "ff3393e0-a205-4b85-a27f-f401c9c19611",
+   "name": "Get customer",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    520,
+    0
+   ],
+   "parameters": {
+    "url": "=http://localhost:5695/v1/customers/{{ $json.customer_id }}",
+    "authentication": "genericCredentialType",
+    "genericAuthType": "httpBearerAuth",
+    "options": {
+     "batching": {
+      "batch": {
+       "batchSize": 10,
+       "batchInterval": 1000
+      }
+     }
+    }
+   }
+  }
+ ],
+ "connections": {
+  "When clicking ‘Execute workflow’": {
+   "main": [
+    [
+     {
+      "node": "Get orders",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Get orders": {
+   "main": [
+    [
+     {
+      "node": "Get customer",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}

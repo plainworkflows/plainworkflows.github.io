@@ -96,5 +96,15 @@
    "Replace the FAQ in the AI Agent system message with your own, and set Allowed Origins on the Chat Trigger to your site (commas, no spaces)",
    "Publish the workflow and paste the @n8n/chat snippet with your Chat URL into your page"
   ]
+ },
+ {
+  "slug": "http-request-errors-sync-orders",
+  "titulo": "n8n HTTP Request Errors: Fix 401, 403, 404, 429 Too Many Requests and Pagination (n8n 2)",
+  "video": "",
+  "precisa": [
+   "Bearer Auth credential with your API key (paste only the key, not the word Bearer)",
+   "Replace the two URLs (a local test API in the video) with your API's endpoints and the field name of the ID",
+   "Set Batching and Pagination to your API's limits and page parameter, from its docs"
+  ]
  }
 ]
