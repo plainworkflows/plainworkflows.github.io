@@ -110,7 +110,7 @@
  {
   "slug": "form-trigger-workshop-signup",
   "titulo": "n8n Form Trigger Tutorial: Build a Form That Validates, Saves and Replies (Data Tables)",
-  "video": "",
+  "video": "https://youtu.be/HOoYhqWcEJY",
   "precisa": [
    "A data table named Workshop signups with two text columns, name and email (Overview, Data tables), or pick your own table in the three Data table nodes",
    "Publish the workflow and share the production URL of the Form Trigger (path workshop-signup)"
