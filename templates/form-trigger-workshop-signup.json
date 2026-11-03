@@ -1,0 +1,238 @@
+{
+ "name": "Workshop sign-up (finished)",
+ "nodes": [
+  {
+   "id": "1306adeb-087c-4433-b2d7-0b1cac3b8c59",
+   "name": "On form submission",
+   "type": "n8n-nodes-base.formTrigger",
+   "typeVersion": 2.6,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {
+    "formTitle": "Workshop sign-up",
+    "formDescription": "Free online workshop: your first n8n automation. One seat per email.",
+    "formFields": {
+     "values": [
+      {
+       "fieldLabel": "Name",
+       "requiredField": true
+      },
+      {
+       "fieldLabel": "Email",
+       "fieldType": "email",
+       "requiredField": true
+      }
+     ]
+    },
+    "options": {
+     "path": "workshop-signup"
+    }
+   },
+   "webhookId": "0c9be5df-2eda-45ea-a5aa-435bb36f8599"
+  },
+  {
+   "id": "441c66d5-bf87-4ca2-a1a0-6a675daefb78",
+   "name": "Find email",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    240,
+    0
+   ],
+   "parameters": {
+    "resource": "row",
+    "operation": "get",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "name",
+     "value": "Workshop signups"
+    },
+    "filters": {
+     "conditions": [
+      {
+       "keyName": "email",
+       "condition": "eq",
+       "keyValue": "={{ $json.Email }}"
+      }
+     ]
+    }
+   },
+   "alwaysOutputData": true
+  },
+  {
+   "id": "ed8a3625-2078-4c66-9148-8636a3258912",
+   "name": "Already signed up?",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    480,
+    0
+   ],
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "id": "2f8e0f85-91ea-4cbe-88dc-973469e49b65",
+       "leftValue": "={{ $json.id }}",
+       "rightValue": "",
+       "operator": {
+        "type": "number",
+        "operation": "exists",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   }
+  },
+  {
+   "id": "3b5ea035-cd67-4c2c-bd5b-b3e18598cabc",
+   "name": "Already on the list",
+   "type": "n8n-nodes-base.form",
+   "typeVersion": 2.5,
+   "position": [
+    740,
+    -120
+   ],
+   "parameters": {
+    "operation": "completion",
+    "completionTitle": "You're already on the list",
+    "completionMessage": "This email already has a seat. One seat per email.",
+    "options": {}
+   },
+   "webhookId": "b5a65035-074f-4aba-80a3-5ac65d593802"
+  },
+  {
+   "id": "63121bd8-fbd9-45ff-82ef-c004acf06fc6",
+   "name": "Save signup",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    740,
+    120
+   ],
+   "parameters": {
+    "resource": "row",
+    "operation": "insert",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "name",
+     "value": "Workshop signups"
+    },
+    "columns": {
+     "mappingMode": "defineBelow",
+     "value": {
+      "name": "={{ $('On form submission').item.json.Name }}",
+      "email": "={{ $('On form submission').item.json.Email }}"
+     },
+     "matchingColumns": [],
+     "schema": [
+      {
+       "id": "name",
+       "displayName": "name",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true
+      },
+      {
+       "id": "email",
+       "displayName": "email",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true
+      }
+     ]
+    },
+    "options": {}
+   }
+  },
+  {
+   "id": "9d544220-bc18-4bbb-9fe5-dd7a39ce0163",
+   "name": "You're in",
+   "type": "n8n-nodes-base.form",
+   "typeVersion": 2.5,
+   "position": [
+    980,
+    120
+   ],
+   "parameters": {
+    "operation": "completion",
+    "completionTitle": "=You're in, {{ $('On form submission').item.json.Name }}",
+    "completionMessage": "=Seat number {{ $json.id }} is yours. See you on Thursday.",
+    "options": {}
+   },
+   "webhookId": "a37022cf-ff66-4b31-9ee3-998d7cff4fc6"
+  }
+ ],
+ "connections": {
+  "On form submission": {
+   "main": [
+    [
+     {
+      "node": "Find email",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Find email": {
+   "main": [
+    [
+     {
+      "node": "Already signed up?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Already signed up?": {
+   "main": [
+    [
+     {
+      "node": "Already on the list",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Save signup",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Save signup": {
+   "main": [
+    [
+     {
+      "node": "You're in",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "pinData": {}
+}
